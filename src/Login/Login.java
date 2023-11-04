@@ -55,7 +55,7 @@ public class Login extends javax.swing.JFrame {
         MainPanel.setForeground(new java.awt.Color(13, 15, 18));
 
         titlePanel.setBackground(new java.awt.Color(246, 247, 249));
-        titlePanel.setLayout(new java.awt.BorderLayout());
+        titlePanel.setLayout(new java.awt.BorderLayout(0, 10));
 
         TitleLabel.setFont(TitleLabel.getFont().deriveFont(TitleLabel.getFont().getStyle() | java.awt.Font.BOLD));
         TitleLabel.setForeground(new java.awt.Color(13, 15, 18));
@@ -203,7 +203,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(inputLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(inputLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
