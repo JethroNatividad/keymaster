@@ -1,5 +1,12 @@
 package Frames;
 
+import com.mysql.jdbc.PreparedStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import Util.DBConnection;
+import Util.Validator;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -38,7 +45,7 @@ public class Signup extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         PasswordField = new javax.swing.JPasswordField();
         inputLabel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        SignupBtn = new javax.swing.JButton();
         inputLabel4 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
@@ -109,18 +116,23 @@ public class Signup extends javax.swing.JFrame {
         inputLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 30, 1, 30));
         inputLabel3.setLayout(new java.awt.BorderLayout(0, 5));
 
-        jButton1.setBackground(new java.awt.Color(56, 68, 81));
-        jButton1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Create Vault");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton1.setPreferredSize(new java.awt.Dimension(78, 38));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        SignupBtn.setBackground(new java.awt.Color(56, 68, 81));
+        SignupBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        SignupBtn.setForeground(new java.awt.Color(255, 255, 255));
+        SignupBtn.setText("Create Vault");
+        SignupBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        SignupBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        SignupBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SignupBtnMouseClicked(evt);
             }
         });
-        inputLabel3.add(jButton1, java.awt.BorderLayout.CENTER);
+        SignupBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SignupBtnActionPerformed(evt);
+            }
+        });
+        inputLabel3.add(SignupBtn, java.awt.BorderLayout.CENTER);
 
         inputLabel4.setBackground(new java.awt.Color(246, 247, 249));
         inputLabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 30, 1, 30));
@@ -226,9 +238,9 @@ public class Signup extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_EmailTextFieldActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void SignupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignupBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_SignupBtnActionPerformed
 
     private void LoginBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginBtnMouseClicked
         // TODO add your handling code here:
@@ -236,6 +248,56 @@ public class Signup extends javax.swing.JFrame {
         login.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_LoginBtnMouseClicked
+
+    private void SignupBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignupBtnMouseClicked
+        // TODO add your handling code here:
+        try {
+            Connection con = (new DBConnection()).getConnection();
+            Validator validator = new Validator();
+            
+            // Search for existing emails
+            String email = EmailTextField.getText();
+            if(!validator.isEmail(email)){
+                JOptionPane.showMessageDialog(rootPane, "Invalid Email Address");
+                return;
+            }
+            
+            String password = new String(PasswordField.getPassword());
+            if(password.length() < 8) {
+                JOptionPane.showMessageDialog(rootPane, "The password should be at least 8 characters long");
+                return;
+            }
+            
+            String repeatPassword = new String(RepeatPasswordField.getPassword());
+            if(!password.equals(repeatPassword)){
+                JOptionPane.showMessageDialog(rootPane, "Passwords does not match");
+                return;
+            }
+            PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT * FROM users WHERE email = ?");
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                // Alert email already taken
+                System.err.println("Found");
+                JOptionPane.showMessageDialog(rootPane, "An account with that email already exists.");
+
+            } else {
+                // continue
+                ps = (PreparedStatement) con.prepareStatement("INSERT INTO `users` (`email`, `password`) VALUES (?,?);");
+                ps.setString(1, email);
+                ps.setString(2, password);
+                
+                ps.execute();
+                System.out.println("Created account");
+                JOptionPane.showMessageDialog(rootPane, "Account created! Please Login");
+            }
+            
+          
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }//GEN-LAST:event_SignupBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -279,6 +341,7 @@ public class Signup extends javax.swing.JFrame {
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPasswordField PasswordField;
     private javax.swing.JPasswordField RepeatPasswordField;
+    private javax.swing.JButton SignupBtn;
     private javax.swing.JLabel TextLabel;
     private javax.swing.JLabel TitleLabel;
     private javax.swing.JPanel inputLabel;
@@ -286,7 +349,6 @@ public class Signup extends javax.swing.JFrame {
     private javax.swing.JPanel inputLabel3;
     private javax.swing.JPanel inputLabel4;
     private javax.swing.JPanel inputLabel5;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
