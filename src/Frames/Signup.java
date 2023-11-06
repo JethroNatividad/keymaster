@@ -291,6 +291,9 @@ public class Signup extends javax.swing.JFrame {
                 ps.execute();
                 System.out.println("Created account");
                 JOptionPane.showMessageDialog(rootPane, "Account created! Please Login");
+                Login login = new Login();
+                login.setVisible(true);
+                dispose();
             }
             
           
