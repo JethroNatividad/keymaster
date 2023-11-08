@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 
 public class Validator {
     public boolean isEmail(String value){
-//        Pattern emailPattern = Pattern.compile("^[\\w-].]+@([\\w-]+\\.)+[\\w-]{2,4}$", );
         Pattern emailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         return emailPattern.matcher(value).find();
         

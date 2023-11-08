@@ -1,5 +1,12 @@
 package Frames;
 
+import Util.DBConnection;
+import Util.Validator;
+import com.mysql.jdbc.PreparedStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -33,14 +40,14 @@ public class Login extends javax.swing.JFrame {
         TextLabel = new javax.swing.JLabel();
         inputLabel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        EmailTextField = new javax.swing.JTextField();
         inputLabel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        PasswordField = new javax.swing.JPasswordField();
         inputLabel2 = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
         inputLabel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        LoginBtn = new javax.swing.JButton();
         inputLabel4 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
@@ -77,18 +84,18 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setText("Email Address");
         inputLabel.add(jLabel3, java.awt.BorderLayout.PAGE_START);
 
-        jTextField1.setBackground(new java.awt.Color(216, 221, 228));
-        jTextField1.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
-        jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
-        jTextField1.setMargin(new java.awt.Insets(2, 10, 2, 6));
-        jTextField1.setPreferredSize(new java.awt.Dimension(78, 38));
-        jTextField1.setSize(new java.awt.Dimension(78, 38));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        EmailTextField.setBackground(new java.awt.Color(216, 221, 228));
+        EmailTextField.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        EmailTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
+        EmailTextField.setMargin(new java.awt.Insets(2, 10, 2, 6));
+        EmailTextField.setPreferredSize(new java.awt.Dimension(78, 38));
+        EmailTextField.setSize(new java.awt.Dimension(78, 38));
+        EmailTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                EmailTextFieldActionPerformed(evt);
             }
         });
-        inputLabel.add(jTextField1, java.awt.BorderLayout.PAGE_END);
+        inputLabel.add(EmailTextField, java.awt.BorderLayout.PAGE_END);
 
         inputLabel1.setBackground(new java.awt.Color(246, 247, 249));
         inputLabel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 30, 1, 30));
@@ -98,17 +105,11 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setText("Master Password");
         inputLabel1.add(jLabel4, java.awt.BorderLayout.PAGE_START);
 
-        jTextField2.setBackground(new java.awt.Color(216, 221, 228));
-        jTextField2.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
-        jTextField2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
-        jTextField2.setMargin(new java.awt.Insets(2, 10, 2, 6));
-        jTextField2.setPreferredSize(new java.awt.Dimension(78, 38));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-        inputLabel1.add(jTextField2, java.awt.BorderLayout.PAGE_END);
+        PasswordField.setBackground(new java.awt.Color(216, 221, 228));
+        PasswordField.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        PasswordField.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
+        PasswordField.setPreferredSize(new java.awt.Dimension(90, 38));
+        inputLabel1.add(PasswordField, java.awt.BorderLayout.CENTER);
 
         inputLabel2.setBackground(new java.awt.Color(246, 247, 249));
         inputLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 30, 1, 30));
@@ -127,18 +128,23 @@ public class Login extends javax.swing.JFrame {
         inputLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 30, 1, 30));
         inputLabel3.setLayout(new java.awt.BorderLayout(0, 5));
 
-        jButton1.setBackground(new java.awt.Color(56, 68, 81));
-        jButton1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Unlock Vault");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton1.setPreferredSize(new java.awt.Dimension(78, 38));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        LoginBtn.setBackground(new java.awt.Color(56, 68, 81));
+        LoginBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        LoginBtn.setForeground(new java.awt.Color(255, 255, 255));
+        LoginBtn.setText("Unlock Vault");
+        LoginBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        LoginBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        LoginBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LoginBtnMouseClicked(evt);
             }
         });
-        inputLabel3.add(jButton1, java.awt.BorderLayout.CENTER);
+        LoginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginBtnActionPerformed(evt);
+            }
+        });
+        inputLabel3.add(LoginBtn, java.awt.BorderLayout.CENTER);
 
         inputLabel4.setBackground(new java.awt.Color(246, 247, 249));
         inputLabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 30, 1, 30));
@@ -208,7 +214,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(inputLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(inputLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -226,21 +232,17 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void EmailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_EmailTextFieldActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void LoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_LoginBtnActionPerformed
 
     private void SignupBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignupBtnMouseClicked
         // TODO add your handling code here:
@@ -248,6 +250,57 @@ public class Login extends javax.swing.JFrame {
         signup.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_SignupBtnMouseClicked
+
+    private void LoginBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginBtnMouseClicked
+        // TODO add your handling code here:
+        try {
+            Connection con = (new DBConnection()).getConnection();
+            Validator validator = new Validator();
+            
+            // Search for existing emails
+            String email = EmailTextField.getText();
+            if(!validator.isEmail(email)){
+                JOptionPane.showMessageDialog(rootPane, "Invalid Email Address");
+                return;
+            }
+            
+            String password = new String(PasswordField.getPassword());
+      
+            PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT * FROM users WHERE email = ?");
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            
+            if(!rs.next()){
+                // Alert if email is not found
+                JOptionPane.showMessageDialog(rootPane, "Email or Password is incorrect");
+                System.out.println("Email not found");
+            } else {
+                // Check if password matches
+                String dbPassword = rs.getObject("password").toString();
+                System.out.println("Db password: " +dbPassword);
+
+                if(!password.equals(dbPassword)){
+                    System.out.println("Password Doesn't Match");
+                    JOptionPane.showMessageDialog(rootPane, "Email or Password is incorrect");
+                } else {
+                    System.out.println("Password Matches");
+                    // Open Main
+                    Main main = new Main();
+                    main.currentUserId = (int) rs.getObject("id");
+                    
+                    main.setVisible(true);
+                    dispose();
+
+                 
+                }
+                
+            }
+            
+          
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }//GEN-LAST:event_LoginBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -285,7 +338,10 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField EmailTextField;
+    private javax.swing.JButton LoginBtn;
     private javax.swing.JPanel MainPanel;
+    private javax.swing.JPasswordField PasswordField;
     private javax.swing.JLabel SignupBtn;
     private javax.swing.JLabel TextLabel;
     private javax.swing.JLabel TitleLabel;
@@ -294,15 +350,12 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel inputLabel2;
     private javax.swing.JPanel inputLabel3;
     private javax.swing.JPanel inputLabel4;
-    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JPanel titlePanel;
     // End of variables declaration//GEN-END:variables
 }
