@@ -1,5 +1,13 @@
 package Frames;
 
+import Util.DBConnection;
+import Util.PasswordGenerator;
+import com.mysql.jdbc.PreparedStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.JSlider;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -18,6 +26,8 @@ public class Create extends javax.swing.JFrame {
         initComponents();
     }
 
+    public int currentUserId;
+    public Main main;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,26 +42,27 @@ public class Create extends javax.swing.JFrame {
         TextLabel = new javax.swing.JLabel();
         inputLabel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        EmailTextField = new javax.swing.JTextField();
         inputLabel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        PasswordField = new javax.swing.JPasswordField();
         inputLabel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jSlider1 = new javax.swing.JSlider();
+        NameTextField = new javax.swing.JTextField();
+        GenerateBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
+        UppercaseCheckbox = new javax.swing.JCheckBox();
+        LowercaseCheckbox = new javax.swing.JCheckBox();
+        DigitsCheckbox = new javax.swing.JCheckBox();
+        SpecialCharactersCheckbox = new javax.swing.JCheckBox();
+        LengthSlider = new javax.swing.JSlider();
         jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        LengthTextField = new javax.swing.JTextField();
+        SaveBtn = new javax.swing.JButton();
+        ShowPasswordBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
         setResizable(false);
         setSize(new java.awt.Dimension(549, 549));
 
@@ -74,18 +85,18 @@ public class Create extends javax.swing.JFrame {
         jLabel3.setText("Email Address");
         inputLabel.add(jLabel3, java.awt.BorderLayout.PAGE_START);
 
-        jTextField1.setBackground(new java.awt.Color(216, 221, 228));
-        jTextField1.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
-        jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
-        jTextField1.setMargin(new java.awt.Insets(2, 10, 2, 6));
-        jTextField1.setPreferredSize(new java.awt.Dimension(78, 38));
-        jTextField1.setSize(new java.awt.Dimension(78, 38));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        EmailTextField.setBackground(new java.awt.Color(216, 221, 228));
+        EmailTextField.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        EmailTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
+        EmailTextField.setMargin(new java.awt.Insets(2, 10, 2, 6));
+        EmailTextField.setPreferredSize(new java.awt.Dimension(78, 38));
+        EmailTextField.setSize(new java.awt.Dimension(78, 38));
+        EmailTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                EmailTextFieldActionPerformed(evt);
             }
         });
-        inputLabel.add(jTextField1, java.awt.BorderLayout.PAGE_END);
+        inputLabel.add(EmailTextField, java.awt.BorderLayout.PAGE_END);
 
         inputLabel1.setBackground(new java.awt.Color(246, 247, 249));
         inputLabel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 30, 1, 1));
@@ -95,17 +106,11 @@ public class Create extends javax.swing.JFrame {
         jLabel4.setText("Password");
         inputLabel1.add(jLabel4, java.awt.BorderLayout.PAGE_START);
 
-        jTextField2.setBackground(new java.awt.Color(216, 221, 228));
-        jTextField2.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
-        jTextField2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
-        jTextField2.setMargin(new java.awt.Insets(2, 10, 2, 6));
-        jTextField2.setPreferredSize(new java.awt.Dimension(78, 38));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-        inputLabel1.add(jTextField2, java.awt.BorderLayout.PAGE_END);
+        PasswordField.setBackground(new java.awt.Color(216, 221, 228));
+        PasswordField.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        PasswordField.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
+        PasswordField.setPreferredSize(new java.awt.Dimension(90, 38));
+        inputLabel1.add(PasswordField, java.awt.BorderLayout.CENTER);
 
         inputLabel5.setBackground(new java.awt.Color(246, 247, 249));
         inputLabel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 30, 1, 30));
@@ -115,107 +120,136 @@ public class Create extends javax.swing.JFrame {
         jLabel5.setText("Name");
         inputLabel5.add(jLabel5, java.awt.BorderLayout.PAGE_START);
 
-        jTextField3.setBackground(new java.awt.Color(216, 221, 228));
-        jTextField3.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
-        jTextField3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
-        jTextField3.setMargin(new java.awt.Insets(2, 10, 2, 6));
-        jTextField3.setPreferredSize(new java.awt.Dimension(78, 38));
-        jTextField3.setSize(new java.awt.Dimension(78, 38));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        NameTextField.setBackground(new java.awt.Color(216, 221, 228));
+        NameTextField.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        NameTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
+        NameTextField.setMargin(new java.awt.Insets(2, 10, 2, 6));
+        NameTextField.setPreferredSize(new java.awt.Dimension(78, 38));
+        NameTextField.setSize(new java.awt.Dimension(78, 38));
+        NameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                NameTextFieldActionPerformed(evt);
             }
         });
-        inputLabel5.add(jTextField3, java.awt.BorderLayout.PAGE_END);
+        inputLabel5.add(NameTextField, java.awt.BorderLayout.PAGE_END);
 
-        jButton1.setBackground(new java.awt.Color(56, 68, 81));
-        jButton1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Generate password");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton1.setPreferredSize(new java.awt.Dimension(78, 38));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        GenerateBtn.setBackground(new java.awt.Color(56, 68, 81));
+        GenerateBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        GenerateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        GenerateBtn.setText("Generate password");
+        GenerateBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        GenerateBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        GenerateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                GenerateBtnMouseClicked(evt);
             }
         });
-
-        jButton2.setBackground(new java.awt.Color(56, 68, 81));
-        jButton2.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cancel");
-        jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton2.setPreferredSize(new java.awt.Dimension(78, 38));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        GenerateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                GenerateBtnActionPerformed(evt);
             }
         });
 
-        jCheckBox1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jCheckBox1.setSelected(true);
-        jCheckBox1.setText("A-Z");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        cancelBtn.setBackground(new java.awt.Color(56, 68, 81));
+        cancelBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        cancelBtn.setForeground(new java.awt.Color(255, 255, 255));
+        cancelBtn.setText("Cancel");
+        cancelBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        cancelBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        cancelBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelBtnMouseClicked(evt);
+            }
+        });
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                cancelBtnActionPerformed(evt);
             }
         });
 
-        jCheckBox2.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jCheckBox2.setSelected(true);
-        jCheckBox2.setText("a-z");
-        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+        UppercaseCheckbox.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        UppercaseCheckbox.setSelected(true);
+        UppercaseCheckbox.setText("A-Z");
+        UppercaseCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox2ActionPerformed(evt);
+                UppercaseCheckboxActionPerformed(evt);
             }
         });
 
-        jCheckBox3.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jCheckBox3.setText("0-9");
-        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+        LowercaseCheckbox.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        LowercaseCheckbox.setSelected(true);
+        LowercaseCheckbox.setText("a-z");
+        LowercaseCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox3ActionPerformed(evt);
+                LowercaseCheckboxActionPerformed(evt);
             }
         });
 
-        jCheckBox4.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jCheckBox4.setText(" !@#$%^&*");
-        jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
+        DigitsCheckbox.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        DigitsCheckbox.setText("0-9");
+        DigitsCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox4ActionPerformed(evt);
+                DigitsCheckboxActionPerformed(evt);
             }
         });
 
-        jSlider1.setMinimum(5);
-        jSlider1.setSnapToTicks(true);
-        jSlider1.setValue(8);
+        SpecialCharactersCheckbox.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        SpecialCharactersCheckbox.setText(" !@#$%^&*");
+        SpecialCharactersCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SpecialCharactersCheckboxActionPerformed(evt);
+            }
+        });
+
+        LengthSlider.setMinimum(5);
+        LengthSlider.setValue(8);
+        LengthSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                LengthSliderStateChanged(evt);
+            }
+        });
 
         jLabel6.setFont(jLabel6.getFont().deriveFont(jLabel6.getFont().getSize()+1f));
         jLabel6.setText("Length:");
 
-        jTextField4.setText("8");
-
-        jButton3.setBackground(new java.awt.Color(56, 68, 81));
-        jButton3.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Save");
-        jButton3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton3.setPreferredSize(new java.awt.Dimension(78, 38));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        LengthTextField.setText("8");
+        LengthTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                LengthTextFieldActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(56, 68, 81));
-        jButton4.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-view-30.png"))); // NOI18N
-        jButton4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton4.setPreferredSize(new java.awt.Dimension(78, 38));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        SaveBtn.setBackground(new java.awt.Color(56, 68, 81));
+        SaveBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        SaveBtn.setForeground(new java.awt.Color(255, 255, 255));
+        SaveBtn.setText("Save");
+        SaveBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        SaveBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        SaveBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SaveBtnMouseClicked(evt);
+            }
+        });
+        SaveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                SaveBtnActionPerformed(evt);
+            }
+        });
+
+        ShowPasswordBtn.setBackground(new java.awt.Color(56, 68, 81));
+        ShowPasswordBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        ShowPasswordBtn.setForeground(new java.awt.Color(255, 255, 255));
+        ShowPasswordBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-view-30.png"))); // NOI18N
+        ShowPasswordBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        ShowPasswordBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        ShowPasswordBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ShowPasswordBtnMouseClicked(evt);
+            }
+        });
+        ShowPasswordBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ShowPasswordBtnActionPerformed(evt);
             }
         });
 
@@ -231,32 +265,32 @@ public class Create extends javax.swing.JFrame {
                     .addGroup(MainPanelLayout.createSequentialGroup()
                         .addComponent(inputLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(ShowPasswordBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(MainPanelLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(MainPanelLayout.createSequentialGroup()
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(SaveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(MainPanelLayout.createSequentialGroup()
                                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(MainPanelLayout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(LengthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(LengthSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(MainPanelLayout.createSequentialGroup()
-                                        .addComponent(jCheckBox1)
+                                        .addComponent(UppercaseCheckbox)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox2)
+                                        .addComponent(LowercaseCheckbox)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox3)
+                                        .addComponent(DigitsCheckbox)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox4)))
+                                        .addComponent(SpecialCharactersCheckbox)))
                                 .addGap(29, 29, 29)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(GenerateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(31, 31, 31))
         );
         MainPanelLayout.setVerticalGroup(
@@ -264,32 +298,32 @@ public class Create extends javax.swing.JFrame {
             .addGroup(MainPanelLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(inputLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(inputLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ShowPasswordBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(MainPanelLayout.createSequentialGroup()
                         .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LengthSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(LengthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox2)
-                            .addComponent(jCheckBox3)
-                            .addComponent(jCheckBox4)))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(UppercaseCheckbox)
+                            .addComponent(LowercaseCheckbox)
+                            .addComponent(DigitsCheckbox)
+                            .addComponent(SpecialCharactersCheckbox)))
+                    .addComponent(GenerateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(83, 83, 83)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SaveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
         );
 
@@ -308,49 +342,152 @@ public class Create extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void EmailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_EmailTextFieldActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void GenerateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerateBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_GenerateBtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void NameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NameTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_NameTextFieldActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_cancelBtnActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void UppercaseCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UppercaseCheckboxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_UppercaseCheckboxActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void LowercaseCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LowercaseCheckboxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_LowercaseCheckboxActionPerformed
 
-    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+    private void DigitsCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DigitsCheckboxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox2ActionPerformed
+    }//GEN-LAST:event_DigitsCheckboxActionPerformed
 
-    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
+    private void SpecialCharactersCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SpecialCharactersCheckboxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox3ActionPerformed
+    }//GEN-LAST:event_SpecialCharactersCheckboxActionPerformed
 
-    private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
+    private void SaveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox4ActionPerformed
+    }//GEN-LAST:event_SaveBtnActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void ShowPasswordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowPasswordBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_ShowPasswordBtnActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void cancelBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelBtnMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        dispose();
+    }//GEN-LAST:event_cancelBtnMouseClicked
+
+    private void SaveBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveBtnMouseClicked
+        // TODO add your handling code here:
+        try {
+            Connection con = (new DBConnection()).getConnection();
+            
+            String name = NameTextField.getText();
+            if(name.isBlank()){
+                JOptionPane.showMessageDialog(rootPane, "Name cannot be empty");
+                return;
+            }
+            // Search for existing emails
+            String email = EmailTextField.getText();
+            if(email.isBlank()){
+                JOptionPane.showMessageDialog(rootPane, "Email cannot be empty");
+                return;
+            }
+            
+            String password = new String(PasswordField.getPassword());
+            if(name.isBlank()){
+                JOptionPane.showMessageDialog(rootPane, "Password cannot be empty");
+                return;
+            }
+            
+            PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT * FROM users WHERE id = ?");
+            ps.setInt(1, currentUserId);
+            ResultSet rs = ps.executeQuery();
+            
+            if(!rs.next()){
+                // Current user is not found
+                System.err.println("Found");
+                JOptionPane.showMessageDialog(rootPane, "User doesn't exists, Please re login");
+                Login login = new Login();
+                login.setVisible(true);
+                dispose();
+
+            } else {
+                // continue
+                ps = (PreparedStatement) con.prepareStatement("INSERT INTO `credentials` (`user_id`, `name`, `email`, `password`) VALUES (?,?,?,?);");
+                ps.setInt(1, currentUserId);
+                ps.setString(2, name);
+                ps.setString(3, email);
+                ps.setString(4, password);
+                
+                ps.execute();
+                System.out.println("Credential Saved");
+                // TODO: Refresh table on main
+                main.refreshTable();
+                dispose();
+            }
+            
+          
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }//GEN-LAST:event_SaveBtnMouseClicked
+
+    private void LengthSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_LengthSliderStateChanged
+        // TODO add your handling code here:
+        JSlider source = (JSlider)evt.getSource();
+        LengthTextField.setText(source.getValue() + "");
+        
+    }//GEN-LAST:event_LengthSliderStateChanged
+
+    private void LengthTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LengthTextFieldActionPerformed
+        // TODO add your handling code here:
+        LengthSlider.setValue(Integer.parseInt(LengthTextField.getText()));
+    }//GEN-LAST:event_LengthTextFieldActionPerformed
+
+    private void GenerateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GenerateBtnMouseClicked
+        // TODO add your handling code here:
+        PasswordGenerator generator = new PasswordGenerator();
+        int length = Integer.parseInt(LengthTextField.getText());
+        boolean isUppercase = UppercaseCheckbox.isSelected();
+        boolean isLowercase = LowercaseCheckbox.isSelected();
+        boolean isDigits = DigitsCheckbox.isSelected();
+        boolean isSpecialCharacters = SpecialCharactersCheckbox.isSelected();
+        
+        String generatedPassword = generator.generatePassword(length, isUppercase, isLowercase, isDigits, isSpecialCharacters);
+        
+        System.out.println(length);
+        System.out.println(isUppercase);
+        System.out.println(isLowercase);
+        System.out.println(isDigits);
+        System.out.println(isSpecialCharacters);
+        System.out.println(generatedPassword);
+        
+        PasswordField.setText(generatedPassword);
+        
+        
+        
+    }//GEN-LAST:event_GenerateBtnMouseClicked
+
+    private void ShowPasswordBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowPasswordBtnMouseClicked
+        // TODO add your handling code here:
+        if(PasswordField.echoCharIsSet()){
+            PasswordField.setEchoChar((char) 0);
+        } else {
+            PasswordField.setEchoChar('*');
+        }
+        
+    }//GEN-LAST:event_ShowPasswordBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -389,28 +526,28 @@ public class Create extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox DigitsCheckbox;
+    private javax.swing.JTextField EmailTextField;
+    private javax.swing.JButton GenerateBtn;
+    private javax.swing.JSlider LengthSlider;
+    private javax.swing.JTextField LengthTextField;
+    private javax.swing.JCheckBox LowercaseCheckbox;
     private javax.swing.JPanel MainPanel;
+    private javax.swing.JTextField NameTextField;
+    private javax.swing.JPasswordField PasswordField;
+    private javax.swing.JButton SaveBtn;
+    private javax.swing.JButton ShowPasswordBtn;
+    private javax.swing.JCheckBox SpecialCharactersCheckbox;
     private javax.swing.JLabel TextLabel;
+    private javax.swing.JCheckBox UppercaseCheckbox;
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JPanel inputLabel;
     private javax.swing.JPanel inputLabel1;
     private javax.swing.JPanel inputLabel5;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JPanel titlePanel;
     // End of variables declaration//GEN-END:variables
 }

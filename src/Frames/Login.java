@@ -276,7 +276,7 @@ public class Login extends javax.swing.JFrame {
                 System.out.println("Email not found");
             } else {
                 // Check if password matches
-                String dbPassword = rs.getObject("password").toString();
+                String dbPassword = rs.getString("password");
                 System.out.println("Db password: " +dbPassword);
 
                 if(!password.equals(dbPassword)){
@@ -286,7 +286,7 @@ public class Login extends javax.swing.JFrame {
                     System.out.println("Password Matches");
                     // Open Main
                     Main main = new Main();
-                    main.currentUserId = (int) rs.getObject("id");
+                    main.currentUserId = rs.getInt("id");
                     
                     main.setVisible(true);
                     dispose();
