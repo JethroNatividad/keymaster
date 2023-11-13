@@ -402,11 +402,14 @@ public class Main extends javax.swing.JFrame {
                 Vector selected = dtm.getDataVector().elementAt(Table.convertRowIndexToModel(Table.getSelectedRow()));
                 System.out.println(selected);
                 Edit edit = new Edit();
+                edit.main = this;
                 edit.currentUserId = currentUserId;
-                edit.id = (int) selected.get(0);
+                edit.id = Integer.parseInt(selected.get(0).toString());
                 edit.name = selected.get(1).toString();
                 edit.email = selected.get(2).toString();
                 edit.password = selected.get(3).toString();
+                edit.populateFields();
+                
 
                 PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT * FROM users WHERE id = ?");
                 ps.setInt(1, currentUserId);
@@ -421,19 +424,9 @@ public class Main extends javax.swing.JFrame {
                     dispose();
 
                 } else {
-                    // TODO
-                    // continue
-//                    ps = (PreparedStatement) con.prepareStatement("INSERT INTO `credentials` (`user_id`, `name`, `email`, `password`) VALUES (?,?,?,?);");
-//                    ps.setInt(1, currentUserId);
-//                    ps.setString(2, name);
-//                    ps.setString(3, email);
-//                    ps.setString(4, password);
-//
-//                    ps.execute();
-//                    System.out.println("Credential Saved");
-//                    // TODO: Refresh table on main
-//                    main.refreshTable();
-//                    dispose();
+                    
+                    edit.setVisible(true);
+                    
                 }
 
             
