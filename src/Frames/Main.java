@@ -9,6 +9,7 @@ import Util.Validator;
 import com.mysql.jdbc.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -47,9 +48,9 @@ public class Main extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        editBtn = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        ShowPasswordBtn = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(771, 549));
@@ -109,20 +110,20 @@ public class Main extends javax.swing.JFrame {
         Table.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Name", "Username/Email", "Password"
+                "ID", "Name", "Username/Email", "Password"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -133,6 +134,7 @@ public class Main extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        Table.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
         Table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         Table.setGridColor(new java.awt.Color(246, 247, 249));
         Table.setSelectionBackground(new java.awt.Color(56, 68, 81));
@@ -200,15 +202,20 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setBackground(new java.awt.Color(56, 68, 81));
-        jButton6.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-edit-30.png"))); // NOI18N
-        jButton6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton6.setPreferredSize(new java.awt.Dimension(78, 38));
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        editBtn.setBackground(new java.awt.Color(56, 68, 81));
+        editBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        editBtn.setForeground(new java.awt.Color(255, 255, 255));
+        editBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-edit-30.png"))); // NOI18N
+        editBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        editBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        editBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editBtnMouseClicked(evt);
+            }
+        });
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                editBtnActionPerformed(evt);
             }
         });
 
@@ -224,10 +231,15 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setBackground(new java.awt.Color(56, 68, 81));
-        jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-view-30.png"))); // NOI18N
-        jToggleButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jToggleButton1.setPreferredSize(new java.awt.Dimension(78, 38));
+        ShowPasswordBtn.setBackground(new java.awt.Color(56, 68, 81));
+        ShowPasswordBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-view-30.png"))); // NOI18N
+        ShowPasswordBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        ShowPasswordBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        ShowPasswordBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ShowPasswordBtnMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -247,16 +259,16 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ShowPasswordBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -270,11 +282,11 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ShowPasswordBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31))
@@ -315,9 +327,9 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_addBtnActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_editBtnActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
@@ -343,9 +355,10 @@ public class Main extends javax.swing.JFrame {
             dtm.setRowCount(0);
             while(rs.next()){
                 Object[] student = new Object[5];
-                student[0] = rs.getString("name");
-                student[1] = rs.getString("email");
-                student[2] = rs.getString("password");
+                student[0] = rs.getString("id");
+                student[1] = rs.getString("name");
+                student[2] = rs.getString("email");
+                student[3] = rs.getString("password");
                 dtm.addRow(student);          
             }
                       
@@ -365,6 +378,72 @@ public class Main extends javax.swing.JFrame {
 //        create.refreshTable = refreshTable;
         create.setVisible(true);
     }//GEN-LAST:event_addBtnMouseClicked
+
+    private void ShowPasswordBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowPasswordBtnMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel dtm = (DefaultTableModel) Table.getModel();
+        boolean isSelected = !Table.getSelectionModel().isSelectionEmpty();
+        if(isSelected){
+//            Vector selected = dtm.getDataVector().elementAt(Table.convertRowIndexToModel(Table.getSelectedRow()));
+//            System.out.println(selected);
+//            dtm.set
+
+        }
+    }//GEN-LAST:event_ShowPasswordBtnMouseClicked
+
+    private void editBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editBtnMouseClicked
+        // TODO add your handling code here:
+        // get current clicked table
+        DefaultTableModel dtm = (DefaultTableModel) Table.getModel();
+        boolean isSelected = !Table.getSelectionModel().isSelectionEmpty();
+        if(isSelected){
+            try {
+                Connection con = (new DBConnection()).getConnection();
+                Vector selected = dtm.getDataVector().elementAt(Table.convertRowIndexToModel(Table.getSelectedRow()));
+                System.out.println(selected);
+                Edit edit = new Edit();
+                edit.currentUserId = currentUserId;
+                edit.id = (int) selected.get(0);
+                edit.name = selected.get(1).toString();
+                edit.email = selected.get(2).toString();
+                edit.password = selected.get(3).toString();
+
+                PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT * FROM users WHERE id = ?");
+                ps.setInt(1, currentUserId);
+                ResultSet rs = ps.executeQuery();
+
+                if(!rs.next()){
+                    // Current user is not found
+                    System.err.println("Found");
+                    JOptionPane.showMessageDialog(rootPane, "User doesn't exists, Please re login");
+                    Login login = new Login();
+                    login.setVisible(true);
+                    dispose();
+
+                } else {
+                    // TODO
+                    // continue
+//                    ps = (PreparedStatement) con.prepareStatement("INSERT INTO `credentials` (`user_id`, `name`, `email`, `password`) VALUES (?,?,?,?);");
+//                    ps.setInt(1, currentUserId);
+//                    ps.setString(2, name);
+//                    ps.setString(3, email);
+//                    ps.setString(4, password);
+//
+//                    ps.execute();
+//                    System.out.println("Credential Saved");
+//                    // TODO: Refresh table on main
+//                    main.refreshTable();
+//                    dispose();
+                }
+
+            
+            } catch (Exception e){
+                JOptionPane.showMessageDialog(rootPane, e);
+            }
+            
+            
+        }
+    }//GEN-LAST:event_editBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -402,19 +481,19 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton ShowPasswordBtn;
     private javax.swing.JTable Table;
     private javax.swing.JLabel TitleLabel;
     private javax.swing.JButton addBtn;
+    private javax.swing.JButton editBtn;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
