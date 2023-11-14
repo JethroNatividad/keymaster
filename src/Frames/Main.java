@@ -27,6 +27,8 @@ public class Main extends javax.swing.JFrame {
     }
     
     public int currentUserId;
+    public boolean rememberEmail;
+    public String rememberedEmail;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,7 +42,7 @@ public class Main extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         TitleLabel = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        logoutBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Table = new javax.swing.JTable();
         jTextField2 = new javax.swing.JTextField();
@@ -49,7 +51,7 @@ public class Main extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
         editBtn = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
         ShowPasswordBtn = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -71,15 +73,20 @@ public class Main extends javax.swing.JFrame {
         TitleLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-key-50.png"))); // NOI18N
         TitleLabel.setText("<html><p style='font-size:24px'><span style='font-weight:bold'>Key</span><span style='font-weight:thin'>master</span></p></html> ");
 
-        jButton2.setBackground(new java.awt.Color(56, 68, 81));
-        jButton2.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Lock Vault");
-        jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton2.setPreferredSize(new java.awt.Dimension(78, 38));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        logoutBtn.setBackground(new java.awt.Color(56, 68, 81));
+        logoutBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
+        logoutBtn.setText("Lock Vault");
+        logoutBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        logoutBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        logoutBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutBtnMouseClicked(evt);
+            }
+        });
+        logoutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                logoutBtnActionPerformed(evt);
             }
         });
 
@@ -91,7 +98,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(TitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
         jPanel2Layout.setVerticalGroup(
@@ -99,7 +106,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(10, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(logoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
         );
@@ -219,15 +226,20 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton7.setBackground(new java.awt.Color(153, 0, 51));
-        jButton7.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-trash-30.png"))); // NOI18N
-        jButton7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton7.setPreferredSize(new java.awt.Dimension(78, 38));
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        deleteBtn.setBackground(new java.awt.Color(153, 0, 51));
+        deleteBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        deleteBtn.setForeground(new java.awt.Color(255, 255, 255));
+        deleteBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-trash-30.png"))); // NOI18N
+        deleteBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        deleteBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        deleteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteBtnMouseClicked(evt);
+            }
+        });
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                deleteBtnActionPerformed(evt);
             }
         });
 
@@ -258,7 +270,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ShowPasswordBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -288,7 +300,7 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31))
         );
 
@@ -311,9 +323,9 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -331,9 +343,9 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_editBtnActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
@@ -438,6 +450,66 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editBtnMouseClicked
 
+    private void deleteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteBtnMouseClicked
+        // TODO add your handling code here:
+        // search by id, then delete
+        DefaultTableModel dtm = (DefaultTableModel) Table.getModel();
+        boolean isSelected = !Table.getSelectionModel().isSelectionEmpty();
+        if(isSelected){
+            try {
+                Connection con = (new DBConnection()).getConnection();
+                Vector selected = dtm.getDataVector().elementAt(Table.convertRowIndexToModel(Table.getSelectedRow()));
+                System.out.println(selected);
+                int id = Integer.parseInt(selected.get(0).toString());
+                
+                
+
+                PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT * FROM users WHERE id = ?");
+                ps.setInt(1, currentUserId);
+                ResultSet rs = ps.executeQuery();
+
+                if(!rs.next()){
+                    // Current user is not found
+                    System.err.println("Found");
+                    JOptionPane.showMessageDialog(rootPane, "User doesn't exists, Please re login");
+                    Login login = new Login();
+                    login.setVisible(true);
+                    dispose();
+
+                } else {
+                    
+                   // sql query here
+//                   "DELETE FROM students WHERE student_id = ?";
+                    ps = (PreparedStatement) con.prepareStatement("DELETE FROM credentials WHERE id = ?");
+                    ps.setInt(1, id);
+                    ps.execute();
+                    refreshTable();
+                    
+                }
+
+            
+            } catch (Exception e){
+                JOptionPane.showMessageDialog(rootPane, e);
+            }
+            
+            
+        }
+        
+    }//GEN-LAST:event_deleteBtnMouseClicked
+
+    private void logoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutBtnMouseClicked
+        // TODO add your handling code here:
+        Login login = new Login();
+        if(rememberEmail){
+            login.rememberEmail = true;
+            login.rememberedEmail = rememberedEmail;
+        }
+        login.setVisible(true);
+
+        dispose();
+        
+    }//GEN-LAST:event_logoutBtnMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -478,15 +550,15 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTable Table;
     private javax.swing.JLabel TitleLabel;
     private javax.swing.JButton addBtn;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton logoutBtn;
     // End of variables declaration//GEN-END:variables
 }

@@ -64,7 +64,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jButton3" min="-2" pref="135" max="-2" attributes="0"/>
                       <Component id="jButton4" min="-2" pref="135" max="-2" attributes="0"/>
-                      <Component id="jButton7" alignment="0" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="deleteBtn" alignment="0" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="ShowPasswordBtn" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="addBtn" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="editBtn" min="-2" pref="42" max="-2" attributes="0"/>
@@ -99,7 +99,7 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="editBtn" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jButton7" min="-2" max="-2" attributes="0"/>
+                          <Component id="deleteBtn" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
@@ -129,7 +129,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="TitleLabel" min="-2" pref="264" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton2" min="-2" pref="165" max="-2" attributes="0"/>
+                      <Component id="logoutBtn" min="-2" pref="165" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -139,7 +139,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace pref="10" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="logoutBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="TitleLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -165,7 +165,7 @@
                 <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style=&apos;font-size:24px&apos;&gt;&lt;span style=&apos;font-weight:bold&apos;&gt;Key&lt;/span&gt;&lt;span style=&apos;font-weight:thin&apos;&gt;master&lt;/span&gt;&lt;/p&gt;&lt;/html&gt; "/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="logoutBtn">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="51" green="44" red="38" type="rgb"/>
@@ -187,7 +187,8 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="logoutBtnMouseClicked"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logoutBtnActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -415,7 +416,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editBtnActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton7">
+        <Component class="javax.swing.JButton" name="deleteBtn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="0" red="99" type="rgb"/>
@@ -439,7 +440,8 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="deleteBtnMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteBtnActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JToggleButton" name="ShowPasswordBtn">

@@ -24,6 +24,9 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
     }
+    
+    public boolean rememberEmail;
+    public String rememberedEmail;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,7 +48,7 @@ public class Login extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         PasswordField = new javax.swing.JPasswordField();
         inputLabel2 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        rememberEmailCheckBox = new javax.swing.JCheckBox();
         inputLabel3 = new javax.swing.JPanel();
         LoginBtn = new javax.swing.JButton();
         inputLabel4 = new javax.swing.JPanel();
@@ -57,6 +60,11 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setSize(new java.awt.Dimension(549, 549));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         MainPanel.setBackground(new java.awt.Color(246, 247, 249));
         MainPanel.setForeground(new java.awt.Color(13, 15, 18));
@@ -115,14 +123,24 @@ public class Login extends javax.swing.JFrame {
         inputLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 30, 1, 30));
         inputLabel2.setLayout(new java.awt.BorderLayout(0, 5));
 
-        jCheckBox1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jCheckBox1.setText("Remember Email");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+        rememberEmailCheckBox.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        rememberEmailCheckBox.setText("Remember Email");
+        rememberEmailCheckBox.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rememberEmailCheckBoxStateChanged(evt);
             }
         });
-        inputLabel2.add(jCheckBox1, java.awt.BorderLayout.CENTER);
+        rememberEmailCheckBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rememberEmailCheckBoxMouseClicked(evt);
+            }
+        });
+        rememberEmailCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rememberEmailCheckBoxActionPerformed(evt);
+            }
+        });
+        inputLabel2.add(rememberEmailCheckBox, java.awt.BorderLayout.CENTER);
 
         inputLabel3.setBackground(new java.awt.Color(246, 247, 249));
         inputLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 30, 1, 30));
@@ -236,9 +254,9 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_EmailTextFieldActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void rememberEmailCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rememberEmailCheckBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_rememberEmailCheckBoxActionPerformed
 
     private void LoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginBtnActionPerformed
         // TODO add your handling code here:
@@ -287,6 +305,8 @@ public class Login extends javax.swing.JFrame {
                     // Open Main
                     Main main = new Main();
                     main.currentUserId = rs.getInt("id");
+                    main.rememberEmail = rememberEmail;
+                    main.rememberedEmail = email;
                     
                     main.setVisible(true);
                     dispose();
@@ -301,6 +321,26 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, e);
         }
     }//GEN-LAST:event_LoginBtnMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        // populate if there is remember email
+        
+        if(rememberEmail){
+            rememberEmailCheckBox.setSelected(true);
+            EmailTextField.setText(rememberedEmail);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void rememberEmailCheckBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rememberEmailCheckBoxMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_rememberEmailCheckBoxMouseClicked
+
+    private void rememberEmailCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rememberEmailCheckBoxStateChanged
+        // TODO add your handling code here:
+        rememberEmail = rememberEmailCheckBox.isSelected();
+    }//GEN-LAST:event_rememberEmailCheckBoxStateChanged
 
     /**
      * @param args the command line arguments
@@ -350,12 +390,12 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel inputLabel2;
     private javax.swing.JPanel inputLabel3;
     private javax.swing.JPanel inputLabel4;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JCheckBox rememberEmailCheckBox;
     private javax.swing.JPanel titlePanel;
     // End of variables declaration//GEN-END:variables
 }

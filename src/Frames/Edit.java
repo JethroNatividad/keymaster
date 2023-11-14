@@ -61,7 +61,7 @@ public class Edit extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         NameTextField = new javax.swing.JTextField();
         cancelBtn = new javax.swing.JButton();
-        SaveBtn = new javax.swing.JButton();
+        UpdateBtn = new javax.swing.JButton();
         ShowPasswordBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -153,20 +153,20 @@ public class Edit extends javax.swing.JFrame {
             }
         });
 
-        SaveBtn.setBackground(new java.awt.Color(56, 68, 81));
-        SaveBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        SaveBtn.setForeground(new java.awt.Color(255, 255, 255));
-        SaveBtn.setText("Update");
-        SaveBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        SaveBtn.setPreferredSize(new java.awt.Dimension(78, 38));
-        SaveBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        UpdateBtn.setBackground(new java.awt.Color(56, 68, 81));
+        UpdateBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        UpdateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        UpdateBtn.setText("Update");
+        UpdateBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        UpdateBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        UpdateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SaveBtnMouseClicked(evt);
+                UpdateBtnMouseClicked(evt);
             }
         });
-        SaveBtn.addActionListener(new java.awt.event.ActionListener() {
+        UpdateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveBtnActionPerformed(evt);
+                UpdateBtnActionPerformed(evt);
             }
         });
 
@@ -202,7 +202,7 @@ public class Edit extends javax.swing.JFrame {
                         .addComponent(ShowPasswordBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(MainPanelLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(SaveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(UpdateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31))
@@ -223,7 +223,7 @@ public class Edit extends javax.swing.JFrame {
                 .addGap(146, 146, 146)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SaveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(UpdateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
         );
 
@@ -254,9 +254,9 @@ public class Edit extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cancelBtnActionPerformed
 
-    private void SaveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveBtnActionPerformed
+    private void UpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_SaveBtnActionPerformed
+    }//GEN-LAST:event_UpdateBtnActionPerformed
 
     private void ShowPasswordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowPasswordBtnActionPerformed
         // TODO add your handling code here:
@@ -267,7 +267,7 @@ public class Edit extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_cancelBtnMouseClicked
 
-    private void SaveBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveBtnMouseClicked
+    private void UpdateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateBtnMouseClicked
         // TODO add your handling code here:
         try {
             Connection con = (new DBConnection()).getConnection();
@@ -322,7 +322,7 @@ public class Edit extends javax.swing.JFrame {
         } catch (Exception e){
             JOptionPane.showMessageDialog(rootPane, e);
         }
-    }//GEN-LAST:event_SaveBtnMouseClicked
+    }//GEN-LAST:event_UpdateBtnMouseClicked
 
     private void ShowPasswordBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowPasswordBtnMouseClicked
         // TODO add your handling code here:
@@ -377,9 +377,9 @@ public class Edit extends javax.swing.JFrame {
     private javax.swing.JPanel MainPanel;
     private javax.swing.JTextField NameTextField;
     private javax.swing.JPasswordField PasswordField;
-    private javax.swing.JButton SaveBtn;
     private javax.swing.JButton ShowPasswordBtn;
     private javax.swing.JLabel TextLabel;
+    private javax.swing.JButton UpdateBtn;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JPanel inputLabel;
     private javax.swing.JPanel inputLabel1;
