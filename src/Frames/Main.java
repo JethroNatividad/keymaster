@@ -7,6 +7,9 @@ package Frames;
 import Util.DBConnection;
 import Util.Validator;
 import com.mysql.jdbc.PreparedStatement;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Vector;
@@ -47,12 +50,11 @@ public class Main extends javax.swing.JFrame {
         Table = new javax.swing.JTable();
         jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        copyUsernameBtn = new javax.swing.JButton();
+        copyPasswordBtn = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
-        ShowPasswordBtn = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(771, 549));
@@ -166,29 +168,39 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(56, 68, 81));
-        jButton3.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-copy-20.png"))); // NOI18N
-        jButton3.setText("Copy Username");
-        jButton3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton3.setPreferredSize(new java.awt.Dimension(78, 38));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        copyUsernameBtn.setBackground(new java.awt.Color(56, 68, 81));
+        copyUsernameBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        copyUsernameBtn.setForeground(new java.awt.Color(255, 255, 255));
+        copyUsernameBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-copy-20.png"))); // NOI18N
+        copyUsernameBtn.setText("Copy Username");
+        copyUsernameBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        copyUsernameBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        copyUsernameBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                copyUsernameBtnMouseClicked(evt);
+            }
+        });
+        copyUsernameBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                copyUsernameBtnActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(56, 68, 81));
-        jButton4.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-copy-20.png"))); // NOI18N
-        jButton4.setText("Copy Password");
-        jButton4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton4.setPreferredSize(new java.awt.Dimension(78, 38));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        copyPasswordBtn.setBackground(new java.awt.Color(56, 68, 81));
+        copyPasswordBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
+        copyPasswordBtn.setForeground(new java.awt.Color(255, 255, 255));
+        copyPasswordBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-copy-20.png"))); // NOI18N
+        copyPasswordBtn.setText("Copy Password");
+        copyPasswordBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        copyPasswordBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        copyPasswordBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                copyPasswordBtnMouseClicked(evt);
+            }
+        });
+        copyPasswordBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                copyPasswordBtnActionPerformed(evt);
             }
         });
 
@@ -243,16 +255,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        ShowPasswordBtn.setBackground(new java.awt.Color(56, 68, 81));
-        ShowPasswordBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-view-30.png"))); // NOI18N
-        ShowPasswordBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        ShowPasswordBtn.setPreferredSize(new java.awt.Dimension(78, 38));
-        ShowPasswordBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ShowPasswordBtnMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -268,10 +270,9 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(copyUsernameBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(copyPasswordBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ShowPasswordBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(35, Short.MAX_VALUE))
@@ -290,11 +291,9 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(39, 39, 39)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(copyUsernameBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ShowPasswordBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(copyPasswordBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -327,13 +326,13 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_logoutBtnActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void copyUsernameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyUsernameBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_copyUsernameBtnActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void copyPasswordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyPasswordBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_copyPasswordBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
@@ -390,18 +389,6 @@ public class Main extends javax.swing.JFrame {
 //        create.refreshTable = refreshTable;
         create.setVisible(true);
     }//GEN-LAST:event_addBtnMouseClicked
-
-    private void ShowPasswordBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowPasswordBtnMouseClicked
-        // TODO add your handling code here:
-        DefaultTableModel dtm = (DefaultTableModel) Table.getModel();
-        boolean isSelected = !Table.getSelectionModel().isSelectionEmpty();
-        if(isSelected){
-//            Vector selected = dtm.getDataVector().elementAt(Table.convertRowIndexToModel(Table.getSelectedRow()));
-//            System.out.println(selected);
-//            dtm.set
-
-        }
-    }//GEN-LAST:event_ShowPasswordBtnMouseClicked
 
     private void editBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editBtnMouseClicked
         // TODO add your handling code here:
@@ -510,6 +497,33 @@ public class Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_logoutBtnMouseClicked
 
+    private void copyUsernameBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_copyUsernameBtnMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel dtm = (DefaultTableModel) Table.getModel();
+        boolean isSelected = !Table.getSelectionModel().isSelectionEmpty();
+        if(isSelected){
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            Vector selected = dtm.getDataVector().elementAt(Table.convertRowIndexToModel(Table.getSelectedRow()));
+            String username = selected.get(2).toString();
+            StringSelection selection = new StringSelection(username);
+            clipboard.setContents(selection, selection);
+        }
+        
+    }//GEN-LAST:event_copyUsernameBtnMouseClicked
+
+    private void copyPasswordBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_copyPasswordBtnMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel dtm = (DefaultTableModel) Table.getModel();
+        boolean isSelected = !Table.getSelectionModel().isSelectionEmpty();
+        if(isSelected){
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            Vector selected = dtm.getDataVector().elementAt(Table.convertRowIndexToModel(Table.getSelectedRow()));
+            String password = selected.get(3).toString();
+            StringSelection selection = new StringSelection(password);
+            clipboard.setContents(selection, selection);
+        }
+    }//GEN-LAST:event_copyPasswordBtnMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -546,15 +560,14 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton ShowPasswordBtn;
     private javax.swing.JTable Table;
     private javax.swing.JLabel TitleLabel;
     private javax.swing.JButton addBtn;
+    private javax.swing.JButton copyPasswordBtn;
+    private javax.swing.JButton copyUsernameBtn;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
