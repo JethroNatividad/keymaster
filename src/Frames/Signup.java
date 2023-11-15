@@ -293,6 +293,7 @@ public class Signup extends javax.swing.JFrame {
                 // continue
                 ps = (PreparedStatement) con.prepareStatement("INSERT INTO `users` (`email`, `password`) VALUES (?,?);");
                 ps.setString(1, email);
+                // TODO: Hash password
                 ps.setString(2, password);
                 
                 ps.execute();
