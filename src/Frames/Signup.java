@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import Util.DBConnection;
 import Util.Validator;
+import java.awt.event.KeyEvent;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -121,6 +122,7 @@ public class Signup extends javax.swing.JFrame {
         SignupBtn.setForeground(new java.awt.Color(255, 255, 255));
         SignupBtn.setText("Create Vault");
         SignupBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        SignupBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         SignupBtn.setPreferredSize(new java.awt.Dimension(78, 38));
         SignupBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -148,6 +150,7 @@ public class Signup extends javax.swing.JFrame {
         LoginBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         LoginBtn.setForeground(new java.awt.Color(98, 118, 141));
         LoginBtn.setText("Unlock here");
+        LoginBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         LoginBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 LoginBtnMouseClicked(evt);
@@ -188,6 +191,11 @@ public class Signup extends javax.swing.JFrame {
         RepeatPasswordField.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         RepeatPasswordField.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
         RepeatPasswordField.setPreferredSize(new java.awt.Dimension(90, 38));
+        RepeatPasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                RepeatPasswordFieldKeyPressed(evt);
+            }
+        });
         inputLabel5.add(RepeatPasswordField, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
@@ -249,8 +257,7 @@ public class Signup extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_LoginBtnMouseClicked
 
-    private void SignupBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignupBtnMouseClicked
-        // TODO add your handling code here:
+    private void SignupWithEmailAndPassword(){
         try {
             Connection con = (new DBConnection()).getConnection();
             Validator validator = new Validator();
@@ -300,7 +307,22 @@ public class Signup extends javax.swing.JFrame {
         } catch (Exception e){
             JOptionPane.showMessageDialog(rootPane, e);
         }
+    }
+        
+
+    private void SignupBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignupBtnMouseClicked
+        // TODO add your handling code here:
+        SignupWithEmailAndPassword();
     }//GEN-LAST:event_SignupBtnMouseClicked
+
+    private void RepeatPasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_RepeatPasswordFieldKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            System.out.println("Enter key pressed");
+            SignupWithEmailAndPassword();
+
+        }
+    }//GEN-LAST:event_RepeatPasswordFieldKeyPressed
 
     /**
      * @param args the command line arguments
