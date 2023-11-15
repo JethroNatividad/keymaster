@@ -3,6 +3,7 @@ package Frames;
 import Util.DBConnection;
 import Util.Validator;
 import com.mysql.jdbc.PreparedStatement;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -117,6 +118,11 @@ public class Login extends javax.swing.JFrame {
         PasswordField.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         PasswordField.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
         PasswordField.setPreferredSize(new java.awt.Dimension(90, 38));
+        PasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                PasswordFieldKeyPressed(evt);
+            }
+        });
         inputLabel1.add(PasswordField, java.awt.BorderLayout.CENTER);
 
         inputLabel2.setBackground(new java.awt.Color(246, 247, 249));
@@ -125,6 +131,7 @@ public class Login extends javax.swing.JFrame {
 
         rememberEmailCheckBox.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         rememberEmailCheckBox.setText("Remember Email");
+        rememberEmailCheckBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         rememberEmailCheckBox.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 rememberEmailCheckBoxStateChanged(evt);
@@ -151,6 +158,7 @@ public class Login extends javax.swing.JFrame {
         LoginBtn.setForeground(new java.awt.Color(255, 255, 255));
         LoginBtn.setText("Unlock Vault");
         LoginBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        LoginBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         LoginBtn.setPreferredSize(new java.awt.Dimension(78, 38));
         LoginBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -178,6 +186,7 @@ public class Login extends javax.swing.JFrame {
         SignupBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 12)); // NOI18N
         SignupBtn.setForeground(new java.awt.Color(98, 118, 141));
         SignupBtn.setText("Create one");
+        SignupBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         SignupBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 SignupBtnMouseClicked(evt);
@@ -269,8 +278,7 @@ public class Login extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_SignupBtnMouseClicked
 
-    private void LoginBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginBtnMouseClicked
-        // TODO add your handling code here:
+    private void LoginWithEmailAndPassword(){
         try {
             Connection con = (new DBConnection()).getConnection();
             Validator validator = new Validator();
@@ -320,6 +328,11 @@ public class Login extends javax.swing.JFrame {
         } catch (Exception e){
             JOptionPane.showMessageDialog(rootPane, e);
         }
+        
+    }
+    private void LoginBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginBtnMouseClicked
+        // TODO add your handling code here:
+        LoginWithEmailAndPassword();
     }//GEN-LAST:event_LoginBtnMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -341,6 +354,16 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         rememberEmail = rememberEmailCheckBox.isSelected();
     }//GEN-LAST:event_rememberEmailCheckBoxStateChanged
+
+    private void PasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PasswordFieldKeyPressed
+        // TODO add your handling code here:
+        // enter
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            System.out.println("Enter key pressed");
+            LoginWithEmailAndPassword();
+
+        }
+    }//GEN-LAST:event_PasswordFieldKeyPressed
 
     /**
      * @param args the command line arguments
