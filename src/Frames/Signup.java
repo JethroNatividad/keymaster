@@ -8,6 +8,9 @@ import Util.DBConnection;
 import Util.Validator;
 import java.awt.event.KeyEvent;
 
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -294,6 +297,16 @@ public class Signup extends javax.swing.JFrame {
                 ps = (PreparedStatement) con.prepareStatement("INSERT INTO `users` (`email`, `password`) VALUES (?,?);");
                 ps.setString(1, email);
                 // TODO: Hash password
+//                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+                // Example: Encoding a password
+//                String rawPassword = "user123";
+//                String encodedPassword = passwordEncoder.encode(rawPassword);
+//                System.out.println("Encoded Password: " + encodedPassword);
+
+                // Example: Verifying a password
+//                boolean isPasswordMatch = passwordEncoder.matches(rawPassword, encodedPassword);
+//                System.out.println("Password Match: " + isPasswordMatch);
                 ps.setString(2, password);
                 
                 ps.execute();

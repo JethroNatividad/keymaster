@@ -32,6 +32,7 @@ public class Main extends javax.swing.JFrame {
     public int currentUserId;
     public boolean rememberEmail;
     public String rememberedEmail;
+    private String searchQuery = "";
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,8 +49,8 @@ public class Main extends javax.swing.JFrame {
         logoutBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Table = new javax.swing.JTable();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        searchTextField = new javax.swing.JTextField();
+        searchBtn = new javax.swing.JButton();
         copyUsernameBtn = new javax.swing.JButton();
         copyPasswordBtn = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
@@ -149,22 +150,27 @@ public class Main extends javax.swing.JFrame {
         Table.setSelectionBackground(new java.awt.Color(56, 68, 81));
         jScrollPane1.setViewportView(Table);
 
-        jTextField2.setBackground(new java.awt.Color(216, 221, 228));
-        jTextField2.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
-        jTextField2.setToolTipText("");
-        jTextField2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
-        jTextField2.setName(""); // NOI18N
-        jTextField2.setPreferredSize(new java.awt.Dimension(78, 38));
+        searchTextField.setBackground(new java.awt.Color(216, 221, 228));
+        searchTextField.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        searchTextField.setToolTipText("");
+        searchTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
+        searchTextField.setName(""); // NOI18N
+        searchTextField.setPreferredSize(new java.awt.Dimension(78, 38));
 
-        jButton1.setBackground(new java.awt.Color(56, 68, 81));
-        jButton1.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-search-30-2.png"))); // NOI18N
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton1.setPreferredSize(new java.awt.Dimension(78, 38));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        searchBtn.setBackground(new java.awt.Color(56, 68, 81));
+        searchBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        searchBtn.setForeground(new java.awt.Color(255, 255, 255));
+        searchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-search-30-2.png"))); // NOI18N
+        searchBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        searchBtn.setPreferredSize(new java.awt.Dimension(78, 38));
+        searchBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchBtnMouseClicked(evt);
+            }
+        });
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                searchBtnActionPerformed(evt);
             }
         });
 
@@ -265,9 +271,9 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(searchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(copyUsernameBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -283,8 +289,8 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -318,9 +324,9 @@ public class Main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_searchBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         // TODO add your handling code here:
@@ -358,8 +364,14 @@ public class Main extends javax.swing.JFrame {
         try {
             Connection con = (new DBConnection()).getConnection();
            
-            PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT * FROM credentials WHERE user_id = ?");
+                
+            PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT * FROM credentials WHERE user_id = ? AND name LIKE ? OR user_id = ? AND email LIKE ?");
             ps.setInt(1, currentUserId);
+            ps.setString(2, "%"+searchQuery+"%");
+            ps.setInt(3, currentUserId);
+            ps.setString(4, "%"+searchQuery+"%");
+//            ps.setInt(3, currentUserId);
+//            ps.setString(4, searchQuery);
             ResultSet rs = ps.executeQuery();
             
             DefaultTableModel dtm = (DefaultTableModel) Table.getModel();
@@ -453,6 +465,7 @@ public class Main extends javax.swing.JFrame {
 
                 PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT * FROM users WHERE id = ?");
                 ps.setInt(1, currentUserId);
+
                 ResultSet rs = ps.executeQuery();
 
                 if(!rs.next()){
@@ -524,6 +537,18 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_copyPasswordBtnMouseClicked
 
+    private void searchBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchBtnMouseClicked
+        // TODO add your handling code here:
+        String query = searchTextField.getText();
+        searchQuery = query;
+        refreshTable();
+        
+            
+        
+        
+        
+    }//GEN-LAST:event_searchBtnMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -567,11 +592,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton copyUsernameBtn;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton editBtn;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JButton logoutBtn;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JTextField searchTextField;
     // End of variables declaration//GEN-END:variables
 }
