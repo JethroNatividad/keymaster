@@ -10,6 +10,7 @@ import com.mysql.jdbc.PreparedStatement;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Vector;
@@ -156,6 +157,11 @@ public class Main extends javax.swing.JFrame {
         searchTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5));
         searchTextField.setName(""); // NOI18N
         searchTextField.setPreferredSize(new java.awt.Dimension(78, 38));
+        searchTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchTextFieldKeyPressed(evt);
+            }
+        });
 
         searchBtn.setBackground(new java.awt.Color(56, 68, 81));
         searchBtn.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
@@ -548,6 +554,17 @@ public class Main extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_searchBtnMouseClicked
+
+    private void searchTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextFieldKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            System.out.println("Enter key pressed");
+            String query = searchTextField.getText();
+            searchQuery = query;
+            refreshTable();
+
+        }
+    }//GEN-LAST:event_searchTextFieldKeyPressed
 
     /**
      * @param args the command line arguments
